@@ -12,10 +12,9 @@ void fill(std::vector<std::string> &vec)
 }
 
 
-bool check(std::vector<std::string>::iterator it)
+bool remove_4_zeroes(std::vector<std::string>::iterator it)
 {
     int count = 0;
-
     // Проверка на 0000'xxxx
     for(int i = 0; i < 4; i++)
     {
@@ -56,6 +55,7 @@ int bin_to_int(std::string str)
 }
 
 
+// ОПЕРАЦИИ НАД F
 std::string F_d(std::string O) // меняет местами I и II
 {
     std::string tmp = "";
@@ -84,18 +84,21 @@ std::string F_f(std::string O) // F_d и F_c или F_c и F_d
 }
 
 
-class F_classes // представлят собой класс операций
+// КЛАСС ОПЕРАЦИЙ
+class F_classes 
 {
     friend bool operator==(const F_classes& L, const F_classes& R);
     public:
         void _fill(std::string);
         bool _is_in_class(std::string);
         void _display();
+        int _number();
         int _rank();
     private:
         std::string F, Fd, Ff, Fc;
 };
 
+// МЕТОДЫ КЛАССА
 void F_classes::_display()
 {
     std::cout << '\n';
@@ -122,21 +125,38 @@ bool operator==(const F_classes& L, const F_classes& R)
     return (L.F == R.F) && (L.Fd == R.Fd) && (L.Ff == R.Ff) && (L.Fc == R.Fc);
 }
 
-int F_classes::_rank()
+int F_classes::_number()
 {
     return bin_to_int(F);
 }
 
+int F_classes::_rank()
+{
+    int rankL = 0, rankR=0;
+    for(int i = 0; i < 4; i++)
+    {
+        rankL += F[i] == '1' ? 1 : 0;
+    }
+
+    for(int i = 4; i < 8; i++)
+    {
+        rankR += F[i] == '1' ? 1 : 0;
+    }
+
+    return rankL + rankR;
+}
+
+
+
+
 int main()
 {
     std::vector<std::string> vec_all_operations{};
-
-
     fill(vec_all_operations);
 
     for(std::vector<std::string>::iterator it = vec_all_operations.begin(); it != vec_all_operations.end(); it++)
     {
-        if(check(it))
+        if(remove_4_zeroes(it))
         {
             vec_all_operations.erase(it);
             --it;
@@ -169,7 +189,7 @@ int main()
 
     for(F_classes F : vec_unique_classes)
     {
-        std::cout << "Класс операций под номером " << F._rank();
+        std::cout << "Класс операций под номером " << F._number() << " и рангом " << F._rank();
         F._display();
     }
 
