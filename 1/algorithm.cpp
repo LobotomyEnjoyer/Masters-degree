@@ -3,6 +3,7 @@
 #include <string>
 #include <bitset>
 
+// ВСПОМОГАТЕЛЬНЫЕ ФУНКЦИИ
 void fill(std::vector<std::string> &vec)
 {
     for(int i = 0; i <= 255; i++)
@@ -10,7 +11,6 @@ void fill(std::vector<std::string> &vec)
         vec.push_back(std::bitset<8>(i).to_string());
     }
 }
-
 
 bool remove_4_zeroes(std::vector<std::string>::iterator it)
 {
@@ -54,7 +54,6 @@ int bin_to_int(std::string str)
     return std::stoi(str, nullptr, 2);
 }
 
-
 // ОПЕРАЦИИ НАД F
 std::string F_d(std::string O) // меняет местами I и II
 {
@@ -82,7 +81,6 @@ std::string F_f(std::string O) // F_d и F_c или F_c и F_d
     std::string tmp = F_c(F_d(O));
     return tmp;
 }
-
 
 // КЛАСС ОПЕРАЦИЙ
 class F_classes 
@@ -145,7 +143,6 @@ int F_classes::_rank()
 
     return rankL + rankR;
 }
-
 
 
 
@@ -213,6 +210,8 @@ int main()
 //  Вторую операцию O_bin проверить следующим образом:
 //     Если O_bin содержится в ЛЮБОМ классе F_n, то рассматриваем следующую операцию O_bin (нельзя строить класс из операции, которая содержится в другом классе)
 //     Иначе строим следующий класс F_n из операции O_bin
+
+
 //  Форматируем построенные классы:
 //  Вводим массив 3х3 для табличной визуализации. (???)
 //  Если в классе F_n какие-то из операций совпадают между собой (сравнивать по bin/int виду)
