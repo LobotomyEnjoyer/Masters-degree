@@ -144,6 +144,9 @@ int F_classes::_rank()
     return rankL + rankR;
 }
 
+// КОНСТАНТЫ
+const int MAX_RANK = 9;
+const int MIN_RANK = 2;
 
 
 int main()
@@ -184,17 +187,31 @@ int main()
         }
     }
 
-    for(F_classes F : vec_unique_classes)
+    std::vector<F_classes> vec_sorted_unique_classes{};
+    for(int rank = ::MIN_RANK ; rank < ::MAX_RANK; rank++)
+    {
+        for(F_classes F : vec_unique_classes)
+        {
+            if(F._rank() == rank)
+            {
+                vec_sorted_unique_classes.push_back(F);
+            }
+        }
+    }
+
+    for(F_classes F : vec_sorted_unique_classes)
     {
         std::cout << "Класс операций под номером " << F._number() << " и рангом " << F._rank();
         F._display();
     }
 
-
     return 0;
 }
 
-// ПРОБЛЕМА: ранг и положение единиц в I и II иногда совпадает со всеми операциями
+// ПРОБЛЕМА: положение единиц в I и II иногда совпадает со всеми операциями в классе
+
+// TODO: Добавить всевозможные комбинации операций меньшего ранга для получения операции ранга N.
+// Пример: вывести все комбинации операций ранга 1 и 2, с помощью которых строится ранг 3.
 
 // Алгоритм:
 // === ДВОИЧНЫМИ ЧИСЛАМИ ===
