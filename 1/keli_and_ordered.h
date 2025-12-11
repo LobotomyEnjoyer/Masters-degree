@@ -9,11 +9,13 @@
 
 std::string dec_to_bin(int);
 
+int binvec_to_int(std::vector<int>);
+
 std::vector<std::string> _div(std::string);
 
-bool _comparison(std::vector<int>, std::vector<std::string>, int&, int& );
+bool _comparison(std::vector<int>, std::vector<std::string>, int&, int&);
 
-std::array<std::array<int,16>,16> algorithm(std::vector<int>, std::vector<int>);
+std::array<std::array<int,16>,16> construct_keli(std::vector<int>, std::vector<int>);
 
 bool is_ordered(int, int);
 
