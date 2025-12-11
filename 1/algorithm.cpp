@@ -148,12 +148,15 @@ int F_classes::_rank()
 }
 
 // КОНСТАНТЫ
-const int MAX_RANK = 9;
-const int MIN_RANK = 2;
+const int MAX_RANK = 8; 
+const int MIN_RANK = 2; 
 
 
 int main()
 {
+
+    // здесь просто генерируются всевозможные классы операций
+    // а так же устранение классов операций вида 0000'xxxx или xxxx'0000
     std::vector<std::string> vec_all_operations{};
     fill(vec_all_operations);
 
@@ -166,6 +169,8 @@ int main()
         }
     }
 
+
+    // здесь происходит отбор уникальных классов
     std::vector<F_classes> vec_unique_classes{};
     for(std::string O : vec_all_operations)
     {
@@ -190,8 +195,10 @@ int main()
         }
     }
 
+
+    // здесь происходит сортировка классов операций по рангу (или ранку). От меньшего к большемую.
     std::vector<F_classes> vec_sorted_unique_classes{};
-    for(int rank = ::MIN_RANK ; rank < ::MAX_RANK; rank++)
+    for(int rank = ::MIN_RANK ; rank <= ::MAX_RANK ; rank++)
     {
         for(F_classes F : vec_unique_classes)
         {
@@ -217,7 +224,7 @@ int main()
 // Пример: вывести все комбинации операций ранга 1 и 2, с помощью которых строится ранг 3.
 
 // Алгоритм:
-// === ДВОИЧНЫМИ ЧИСЛАМИ ===
+// === КОДИРОВКА ОПЕРАЦИЙ ДВОИЧНЫМИ ЧИСЛАМИ ===
 //  Создать контейнер с операциями
 //  Заполнить контейнер всевозможными операциями от 0000 0000 до 1111 1111 (где левая часть - первая под-операция, правая часть - вторая под-операция)
 //  Выкинуть все операции, которые имеют вид 0000 xxxx или xxxx 0000
