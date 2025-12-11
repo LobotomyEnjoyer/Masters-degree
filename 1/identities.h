@@ -1,5 +1,5 @@
 #ifndef IDENTITIES_H
-#define INDENTITIES_H
+#define IDENTITIES_H
 
 #include<array>
 
