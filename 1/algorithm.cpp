@@ -3,6 +3,9 @@
 #include <string>
 #include <bitset>
 
+#include "identities.h"
+#include "keli_and_ordered.h"
+
 // ВСПОМОГАТЕЛЬНЫЕ ФУНКЦИИ
 void fill(std::vector<std::string> &vec)
 {
