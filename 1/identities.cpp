@@ -1,5 +1,9 @@
 #include<array>
 
+// если idenN вернёт true - тождество не выполняется
+// иначе false
+// ЖЕЛАТЕЛЬНО ПОМЕНЯТЬ МЕСТАМИ
+
 // (xy)z = x(yz)
 bool iden1(std::array<std::array<int,16>,16> K){
     bool res = false;
