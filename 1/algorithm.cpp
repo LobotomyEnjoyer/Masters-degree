@@ -6,6 +6,10 @@
 #include "identities.h"
 #include "keli_and_ordered.h"
 
+// КОНСТАНТЫ
+const int MAX_RANK = 8; 
+const int MIN_RANK = 2; 
+
 // ВСПОМОГАТЕЛЬНЫЕ ФУНКЦИИ
 
 // Заполняет вектор всеми операциями
@@ -185,12 +189,29 @@ std::vector<int> F_classes::_get_II()
 
 }
 
+// (xy)z = x(yz) (ТОЛЬКО НА ВЫЯВЛЕНИЕ АССОЦИАТИВНОСТИ)
+bool associative_iden(std::array<std::array<int, 16>, 16> K)
+{
+    bool res = true;
+    for(int x = 0; x < 16; x++)
+    {
+        for(int y = 0; y < 16; y++)
+        {
+            for(int z = 0; z < 16; z++)
+            {
+                int xy = K[x][y];
+                int xyz1 = K[xy][z];
 
-// КОНСТАНТЫ
+                int yz = K[y][z];
+                int xyz2 = K[x][yz];
 
-const int MAX_RANK = 8; 
-const int MIN_RANK = 2; 
-
+                res = xyz1 == xyz2 ? true : false;
+                if(!res){return false;}
+            }
+        }
+    }
+    return true;
+}
 
 // Проверяет класс на ассоциативность
 bool is_associative(F_classes X)
@@ -205,10 +226,10 @@ bool is_associative(F_classes X)
     std::array<std::array<int, 16>, 16> K = construct_keli(I, II);
 
     // Тождество ассоциативности
-    if(iden1(K))
-        return false; // не ассоциативно
-    else
+    if(associative_iden(K))
         return true; // ассоциативно
+    
+    return false; // не ассоциативно
 }
 
 int main()
@@ -270,7 +291,7 @@ int main()
 
 
 
-    // СОЗДАТЬ ВЫВОД В ФАЙЛ!!!
+    // // СОЗДАТЬ ВЫВОД В ФАЙЛ!!!
     // for(F_classes F : vec_sorted_unique_classes)
     // {
     //     std::cout << "Класс операций под номером " << F._number() << " и рангом " << F._rank();
