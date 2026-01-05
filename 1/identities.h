@@ -21,6 +21,9 @@ bool iden4_star(std::array<std::array<int,16>,16> K);
 // xyz = yxz
 bool iden5(std::array<std::array<int,16>,16> K);
 
+// xyz = xzy
+bool iden5_star(std::array<std::array<int,16>,16> K);
+
 // xy ≤ y
 bool iden6(std::array<std::array<int,16>,16> K, std::array<std::array<int,16>,16> O);
 
@@ -41,5 +44,8 @@ bool quasi_iden9(std::array<std::array<int,16>,16> K, std::array<std::array<int,
 
 // (x ≤ yz ∧ x ≤ wv) ⇒ x ≤ yv
 bool quasi_iden10(std::array<std::array<int,16>,16> K, std::array<std::array<int,16>,16> O);
+
+// (x ≤ y ∧ x ≤ zy) ⇒ x ≤ y^2
+bool quasi_iden10_star(std::array<std::array<int,16>,16> K, std::array<std::array<int,16>,16> O);
 
 #endif

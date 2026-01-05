@@ -7,6 +7,8 @@
 // return == false - тождество не выполняется
 // return == true - тождество выполняется
 
+// убрать лишнее из кода и упростить его
+
 static bool implication(bool x, bool y)
 {
     if((x == 1) && (y == 0))
@@ -136,6 +138,32 @@ bool iden5(std::array<std::array<int,16>,16> K)
                 int yxz = K[yx][z];
 
                 res = xyz == yxz ? true : false;
+                if(!res)
+                    return false;
+            }
+        }
+    }
+
+    return true;
+}
+
+// xyz = xzy
+bool iden5_star(std::array<std::array<int,16>,16> K)
+{
+    bool res = true;
+    for(int x = 0; x < 16; x++)
+    {
+        for(int y = 0; y < 16; y++)
+        {
+            for(int z = 0; z < 16; z++)
+            {
+                int xy = K[x][y];
+                int xyz = K[xy][z];
+
+                int xz = K[x][z];
+                int xzy = K[xz][y];
+
+                res = xyz == xzy ? true : false;
                 if(!res)
                     return false;
             }
@@ -312,6 +340,37 @@ bool quasi_iden10(std::array<std::array<int,16>,16> K, std::array<std::array<int
                             return false;
                     }
                 }
+            }
+        }
+    }
+
+    return true;
+}
+
+// (x ≤ y ∧ x ≤ zy) ⇒ x ≤ y^2
+bool quasi_iden10_star(std::array<std::array<int,16>,16> K, std::array<std::array<int,16>,16> O)
+{
+    bool res = true;
+    for(int x = 0; x < 16; x++)
+    {
+        for(int y = 0; y < 16; y++)
+        {
+            for(int z = 0; z < 16; z++)
+            {
+                bool o1 = O[x][y];
+                int zy = K[z][y];
+
+                bool o2 = O[x][zy];
+
+                bool O1 = o1 && o2;
+
+                int yy = K[y][y];
+                bool O2 = O[x][yy];
+
+                res = implication(O1, O2) ? true : false;
+                if(!res)
+                    return false;
+                
             }
         }
     }
