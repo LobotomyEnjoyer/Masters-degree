@@ -105,6 +105,7 @@ class F_classes
         int _rank();
         std::vector<int> _get_I();
         std::vector<int> _get_II();
+        std::string _get_F();
     private:
         std::string F, Fd, Ff, Fc;
 };
@@ -189,6 +190,11 @@ std::vector<int> F_classes::_get_II()
 
 }
 
+std::string F_classes::_get_F()
+{
+    return F;
+}
+
 // (xy)z = x(yz) (ТОЛЬКО НА ВЫЯВЛЕНИЕ АССОЦИАТИВНОСТИ)
 bool associative_iden(std::array<std::array<int, 16>, 16> K)
 {
@@ -235,59 +241,115 @@ bool is_associative(F_classes X)
 int main()
 {
 
+    // здесь происходит проверка тождеств на заданных операциях (увы, операции надо записывать руками)
+    std::vector<std::string> vec_operations = 
+    {
+        "01000100",
+        "01100110",
+        "11001100",
+        "11011101",
+        "11001100",
+        "10011001",
+        "01100100",
+        "01101100",
+        "11010100",
+        "11110100",
+        "11111001",
+        "10011101",
+        "10000100",
+        "10010100",
+        "10010110",
+        "10011100",
+        "10011101",
+        "10001100",
+        "11011100",
+        "11111100",
+        "11111101",
+        "01101101",
+        "11000101"
+    };
+
+    for(std::string O : vec_operations)
+    {
+        F_classes cls;
+        cls._fill(O);
+
+        std::vector<int> I = cls._get_I(), II = cls._get_II();
+
+        auto Keli = construct_keli(I, II);
+        auto Ordered = construct_ordered();
+
+        std::cout << "\nПроверка тождеств для:\t" << cls._get_F() << '\n';
+
+        if(iden1(Keli)){std::cout << "1 ";}
+        if(iden2(Keli)){std::cout << "2 ";}
+        if(iden3(Keli)){std::cout << "3 ";}
+        if(iden4(Keli)){std::cout << "4 ";}
+        if(iden4_star(Keli)){std::cout << "4* ";}
+        if(iden5(Keli)){std::cout << "5 ";}
+        if(iden5_star(Keli)){std::cout << "5* ";}
+        if(iden6(Keli, Ordered)){std::cout << "6 ";}
+        if(iden6_star(Keli, Ordered)){std::cout << "6* ";}
+        if(iden7(Keli, Ordered)){std::cout << "7 ";}
+        if(quasi_iden8(Keli, Ordered)){std::cout << "8 ";}
+        if(quasi_iden9(Keli, Ordered)){std::cout << "9 ";}
+        if(quasi_iden10(Keli, Ordered)){std::cout << "10 ";}
+        if(quasi_iden10_star(Keli, Ordered)){std::cout << "10* ";}
+    }
+
     // здесь просто генерируются всевозможные классы операций
     // а так же устранение классов операций вида 0000'xxxx или xxxx'0000
-    std::vector<std::string> vec_all_operations{};
-    fill(vec_all_operations);
+    // std::vector<std::string> vec_all_operations{};
+    // fill(vec_all_operations);
 
-    for(std::vector<std::string>::iterator it = vec_all_operations.begin(); it != vec_all_operations.end(); it++)
-    {
-        if(detect_4_zeroes(it))
-        {
-            vec_all_operations.erase(it);
-            --it;
-        }
-    }
+    // for(std::vector<std::string>::iterator it = vec_all_operations.begin(); it != vec_all_operations.end(); it++)
+    // {
+    //     if(detect_4_zeroes(it))
+    //     {
+    //         vec_all_operations.erase(it);
+    //         --it;
+    //     }
+    // }
 
 
     // здесь происходит отбор уникальных классов
-    std::vector<F_classes> vec_unique_classes{};
-    for(std::string O : vec_all_operations)
-    {
-        if(vec_unique_classes.empty())
-        {
-            F_classes F;
-            F._fill(O);
-            vec_unique_classes.push_back(F);
-        }
-        else
-        {
-            for(F_classes F : vec_unique_classes)
-            {
-                if(F._is_in_class(O)) break;
-                else if(F == vec_unique_classes.back() && F._is_in_class(O) == false)
-                {
-                    F_classes Fi;
-                    Fi._fill(O);
-                    vec_unique_classes.push_back(Fi);
-                }
-            }
-        }
-    }
+    // std::vector<F_classes> vec_unique_classes{};
+    // for(std::string O : vec_all_operations)
+    // {
+    //     if(vec_unique_classes.empty())
+    //     {
+    //         F_classes F;
+    //         F._fill(O);
+    //         vec_unique_classes.push_back(F);
+    //     }
+    //     else
+    //     {
+    //         for(F_classes F : vec_unique_classes)
+    //         {
+    //             if(F._is_in_class(O)) break;
+    //             else if(F == vec_unique_classes.back() && F._is_in_class(O) == false)
+    //             {
+    //                 F_classes Fi;
+    //                 Fi._fill(O);
+    //                 vec_unique_classes.push_back(Fi);
+    //             }
+    //         }
+    //     }
+    // }
 
 
     // здесь происходит сортировка классов операций по рангу (или ранку). От меньшего к большемую.
-    std::vector<F_classes> vec_sorted_unique_classes{};
-    for(int rank = ::MIN_RANK ; rank <= ::MAX_RANK ; rank++)
-    {
-        for(F_classes F : vec_unique_classes)
-        {
-            if(F._rank() == rank)
-            {
-                vec_sorted_unique_classes.push_back(F);
-            }
-        }
-    }
+    // std::vector<F_classes> vec_sorted_unique_classes{};
+    // for(int rank = ::MIN_RANK ; rank <= ::MAX_RANK ; rank++)
+    // {
+    //     for(F_classes F : vec_unique_classes)
+    //     {
+    //         if(F._rank() == rank)
+    //         {
+    //             vec_sorted_unique_classes.push_back(F);
+    //         }
+    //     }
+    // }
 
 
 
@@ -299,18 +361,18 @@ int main()
     // }
 
     // Поиск всех ассоциативных классов
-    std::vector<F_classes> vec_associative_classes{};
-    for(F_classes F : vec_sorted_unique_classes)
-    {
-        if(is_associative(F))
-            vec_associative_classes.push_back(F);
-    }
+    // std::vector<F_classes> vec_associative_classes{};
+    // for(F_classes F : vec_sorted_unique_classes)
+    // {
+    //     if(is_associative(F))
+    //         vec_associative_classes.push_back(F);
+    // }
 
-    for(F_classes F : vec_associative_classes)
-    {
-        std::cout << "Класс операций под номером " << F._number() << " и рангом " << F._rank();
-        F._display();
-    }
+    // for(F_classes F : vec_associative_classes)
+    // {
+    //     std::cout << "Класс операций под номером " << F._number() << " и рангом " << F._rank();
+    //     F._display();
+    // }
 
     return 0;
 }
