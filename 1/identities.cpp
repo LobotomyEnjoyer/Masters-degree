@@ -377,3 +377,41 @@ bool quasi_iden10_star(std::array<std::array<int,16>,16> K, std::array<std::arra
 
     return true;
 }
+
+// (x ≤ yz ∧ x ≤ wv) ⇒ x ≤ yv
+bool quasi_iden11(std::array<std::array<int,16>,16> K, std::array<std::array<int,16>,16> O)
+{
+    bool res = true;
+    for(int x = 0; x < 16; x++)
+    {
+        for(int y = 0; y < 16; y++)
+        {
+            for(int z = 0; z < 16; z++)
+            {
+                for(int v = 0; v < 16; v++)
+                {
+                    for(int w = 0; w < 16; w++)
+                    {
+                        int yz = K[y][z];
+                        bool o1 = O[x][yz];
+
+                        int wv = K[w][v];
+                        bool o2 = O[x][wv];
+
+                        bool O1 = o1 && o2;
+
+                        int yv = K[y][v];
+                        bool O2 = O[x][yv];
+
+                        res = implication(O1, O2) ? true : false;
+                        if(!res)
+                            return false;
+                    }
+                }
+                
+            }
+        }
+    }
+
+    return true;
+}

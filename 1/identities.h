@@ -48,4 +48,7 @@ bool quasi_iden10(std::array<std::array<int,16>,16> K, std::array<std::array<int
 // (x ≤ y ∧ x ≤ zy) ⇒ x ≤ y^2
 bool quasi_iden10_star(std::array<std::array<int,16>,16> K, std::array<std::array<int,16>,16> O);
 
+// (x ≤ yz ∧ x ≤ wv) ⇒ x ≤ yv
+bool quasi_iden11(std::array<std::array<int,16>,16> K, std::array<std::array<int,16>,16> O);
+
 #endif
