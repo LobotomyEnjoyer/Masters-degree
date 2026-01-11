@@ -289,14 +289,14 @@ int main()
         if(iden4(Keli)){std::cout << "4 ";}
         if(iden4_star(Keli)){std::cout << "4* ";}
         if(iden5(Keli)){std::cout << "5 ";}
-        if(iden5_star(Keli)){std::cout << "5* ";}
+        // if(iden5_star(Keli)){std::cout << "5* ";}
         if(iden6(Keli, Ordered)){std::cout << "6 ";}
         if(iden6_star(Keli, Ordered)){std::cout << "6* ";}
         if(iden7(Keli, Ordered)){std::cout << "7 ";}
         if(quasi_iden8(Keli, Ordered)){std::cout << "8 ";}
         if(quasi_iden9(Keli, Ordered)){std::cout << "9 ";}
         if(quasi_iden10(Keli, Ordered)){std::cout << "10 ";}
-        if(quasi_iden10_star(Keli, Ordered)){std::cout << "10* ";}
+        // if(quasi_iden10_star(Keli, Ordered)){std::cout << "10* ";}
         if(quasi_iden11(Keli, Ordered)){std:: cout << "11 ";}
 
         std::cout << "\n\n";
