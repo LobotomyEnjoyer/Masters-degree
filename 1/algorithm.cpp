@@ -238,6 +238,27 @@ bool is_associative(F_classes X)
     return false; // не ассоциативно
 }
 
+// Для DEBUG'а, позволяет вывести матрицу Кели или Порядка для просмотра их значений.
+void display_array(std::array<std::array<int,16>,16> M)
+{
+        std::cout << "    ";
+        for(int i = 0; i < 16; i++)
+        {
+            std::cout << i << (i < 10 ? "    " : "   ");
+        }
+        std::cout<<'\n';
+
+        for(int i = 0; i < 16; i++)
+        {
+            std::cout<<i<<(i < 10 ? "   " : "  ");
+            for(int e : M[i])
+            {
+                std::cout << e << (e < 10 ? "    " : "   ");
+            }
+            std::cout << '\n';
+    }
+}
+
 int main()
 {
 
@@ -279,7 +300,7 @@ int main()
 
         auto Keli = construct_keli(I, II);
         auto Ordered = construct_ordered();
-
+        
         std::cout << "\nПроверка тождеств для:\t" << cls._get_F() << '\n';
 
         if(is_associative(cls)){std::cout << "0 ";}
