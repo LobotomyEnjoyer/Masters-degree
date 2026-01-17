@@ -11,7 +11,7 @@
 
 static bool implication(bool x, bool y)
 {
-    if((x == 1) && (y == 0))
+    if((x == true) && (y == false))
         return false;
 
     return true;
