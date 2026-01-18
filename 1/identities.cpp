@@ -293,7 +293,7 @@ bool quasi_iden9(std::array<std::array<int,16>,16> K, std::array<std::array<int,
                 bool o1 = O[x][yy];
 
                 int zz = K[z][z];
-                bool o2 = K[x][zz];
+                bool o2 = O[x][zz];
 
                 bool O1 = o1 && o2;
 

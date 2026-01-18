@@ -301,7 +301,7 @@ int main()
         auto Keli = construct_keli(I, II);
         auto Ordered = construct_ordered();
 
-        display_array(Keli);
+        // display_array(Keli);
         
         std::cout << "\nПроверка тождеств для:\t" << cls._get_F() << '\n';
 
