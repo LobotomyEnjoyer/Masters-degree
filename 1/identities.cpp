@@ -310,7 +310,7 @@ bool quasi_iden9(std::array<std::array<int,16>,16> K, std::array<std::array<int,
     return true;
 }
 
-// (x ≤ yz ∧ x ≤ wv) ⇒ x ≤ yv
+// (x ≤ y ∧ x ≤ yz) ⇒ x ≤ y^2
 bool quasi_iden10(std::array<std::array<int,16>,16> K, std::array<std::array<int,16>,16> O)
 {
     bool res = true;
@@ -320,26 +320,19 @@ bool quasi_iden10(std::array<std::array<int,16>,16> K, std::array<std::array<int
         {
             for(int z = 0; z < 16; z++)
             {
-                for(int w = 0; w < 16; w++)
-                {
-                    for(int v = 0; v < 16; v++)
-                    {
-                        int yz = K[y][z];
-                        bool o1 = O[x][yz];
+                bool o1 = O[x][y];
 
-                        int wv = K[w][v];
-                        bool o2 = O[x][wv];
+                int yz = K[y][z];
+                bool o2 = O[x][yz];
+                bool O1 = o1 && o2;
 
-                        bool O1 = o1 && o2;
 
-                        int yv = K[y][v];
-                        bool O2 = O[x][yv];
+                int yy = K[y][y];
+                bool O2 = O[x][yy];
 
-                        res = implication(O1, O2) ? true : false;
-                        if(!res)
-                            return false;
-                    }
-                }
+                res = implication(O1, O2) ? true : false;
+                if(!res)
+                    return false;
             }
         }
     }
