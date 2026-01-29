@@ -10,6 +10,7 @@
                 "${file}",
                 "identities.cpp",
                 "keli_and_ordered.cpp",
+                "old_identities.cpp",
                 "-o",
                 "${fileDirname}\\${fileBasenameNoExtension}.exe"
             ],

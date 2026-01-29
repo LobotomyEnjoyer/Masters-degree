@@ -5,6 +5,7 @@
 
 #include "identities.h"
 #include "keli_and_ordered.h"
+#include "old_identities.h"
 
 // КОНСТАНТЫ
 const int MAX_RANK = 8; 
@@ -106,6 +107,7 @@ class F_classes
         std::vector<int> _get_I();
         std::vector<int> _get_II();
         std::string _get_F();
+        char _get_type();
     private:
         std::string F, Fd, Ff, Fc;
 };
@@ -195,6 +197,15 @@ std::string F_classes::_get_F()
     return F;
 }
 
+char F_classes::_get_type()
+{
+    if((F == Fd) && (F == Fc) && (F == Ff)){return 'A';}
+    else if((F == Ff) && (Fc == Fd)){return 'B';}
+    else if((F == Fd) && (Fc == Ff)){return 'C';}
+    else if((F == Fc) && (Fd == Ff)){return 'D';}
+    else{return 'E';}
+}
+
 // (xy)z = x(yz) (ТОЛЬКО НА ВЫЯВЛЕНИЕ АССОЦИАТИВНОСТИ)
 bool associative_iden(std::array<std::array<int, 16>, 16> K)
 {
@@ -261,10 +272,16 @@ void display_array(std::array<std::array<int,16>,16> M)
 
 int main()
 {
+    std::vector<std::string> vec_blacklist = 
+    {
+        "00010001",
+        "10001000"
+    };
 
     // здесь происходит проверка тождеств на заданных операциях (увы, операции надо записывать руками)
     std::vector<std::string> vec_operations = 
     {
+        // КОДЫ ИЗ ГРАНТОВ
         "01000100",
         "01100110",
         "11001100",
@@ -289,6 +306,53 @@ int main()
         "11000101",
         "01101101"
 
+
+
+        // КОДЫ ИЗ МОЕГО ДИПЛОМА
+        // "01000110",
+        // "01100100",
+
+        // "01001001",
+        // "10010100",
+
+        // "01001100",
+        // "11000100",
+
+        // "01001010",
+        // "10100100",
+
+        // "00100110",
+        // "01100010",
+
+        // "00101001",
+        // "10010010",
+
+        // "00101100",
+        // "11000010",
+
+        // "00101010",
+        // "10100010",
+
+        // "10000110",
+        // "01101000",
+
+        // "10001001",
+        // "10011000",
+
+        // "10001100",
+        // "11001000",
+
+        // "10000101",
+        // "01011000",
+
+        // "10001010",
+        // "10101000",
+
+        // "10000011",
+        // "00111000",
+        
+        
+
     };
 
     for(std::string O : vec_operations)
@@ -305,6 +369,7 @@ int main()
         
         std::cout << "\nПроверка тождеств для:\t" << cls._get_F() << '\n';
 
+        // КОД ДЛЯ ПРОВЕРКИ ТОЖДЕСТВ ПО ГРАНТАМ
         if(is_associative(cls)){std::cout << "0 ";}
         if(iden1(Keli)){std::cout << "1 ";}
         if(iden2(Keli)){std::cout << "2 ";}
@@ -312,33 +377,41 @@ int main()
         if(iden4(Keli)){std::cout << "4 ";}
         if(iden4_star(Keli)){std::cout << "4* ";}
         if(iden5(Keli)){std::cout << "5 ";}
-        // if(iden5_star(Keli)){std::cout << "5* ";}
         if(iden6(Keli, Ordered)){std::cout << "6 ";}
         if(iden6_star(Keli, Ordered)){std::cout << "6* ";}
         if(iden7(Keli, Ordered)){std::cout << "7 ";}
         if(quasi_iden8(Keli, Ordered)){std::cout << "8 ";}
         if(quasi_iden9(Keli, Ordered)){std::cout << "9 ";}
         if(quasi_iden10(Keli, Ordered)){std::cout << "10 ";}
-        // if(quasi_iden10_star(Keli, Ordered)){std::cout << "10* ";}
         if(quasi_iden11(Keli, Ordered)){std:: cout << "11 ";}
+
+        // КОД ДЛЯ ПРОВЕРКИ ТОЖДЕСТВ ИЗ МОЕГО ДИПЛОМА
+        // if(i1(Keli)){std::cout << "1 ";}
+        // if(i2(Keli)){std::cout << "2 ";}
+        // if(i3(Keli)){std::cout << "3 ";}
+        // if(i4(Keli)){std::cout << "4 ";}
+        // if(i5(Keli)){std::cout << "5 ";}
+        // if(i6(Keli)){std::cout << "6 ";}
+        // if(i7(Keli)){std::cout << "7 ";}
+        // if(i8(Keli)){std::cout << "8 ";}
+        // if(i9(Keli)){std::cout << "9 ";}
+        // if(i10(Keli, Ordered)){std::cout << "10 ";}
+        // if(i11(Keli, Ordered)){std::cout << "11 ";}
+        // if(qi12(Keli, Ordered)){std::cout << "12 ";}
+        // if(qi13(Keli, Ordered)){std::cout << "13 ";}
+        // if(qi14(Keli, Ordered)){std::cout << "14 ";}
 
         std::cout << "\n\n";
     }
 
-    // ПРОБЛЕМА!!!
-    // Некоторые тождества выводит с ошибками или вовсе их не проверяет. Пример: 9-ое является следствием 11,
-    // т.е. if 11 == true => 9 == true, но 9 всегда false.
-    // Возможно, проблема либо в тождествах (из-за полного перебора), либо в таблице Кели или матрице Порядка
-    // Известно, что 9 не выполняется при x = 3, y = 3 z = 1 (или же при x = 0011, y = 0011, z = 0001)
-
     // здесь просто генерируются всевозможные классы операций
-    // а так же устранение классов операций вида 0000'xxxx или xxxx'0000
+    // а так же устранение классов операций вида 0000'xxxx или xxxx'0000, а так же из черного списка
     // std::vector<std::string> vec_all_operations{};
     // fill(vec_all_operations);
 
     // for(std::vector<std::string>::iterator it = vec_all_operations.begin(); it != vec_all_operations.end(); it++)
     // {
-    //     if(detect_4_zeroes(it))
+    //     if(detect_4_zeroes(it) || (*it) == vec_blacklist[0] || (*it) == vec_blacklist[1])
     //     {
     //         vec_all_operations.erase(it);
     //         --it;
@@ -372,7 +445,7 @@ int main()
     // }
 
 
-    // здесь происходит сортировка классов операций по рангу (или ранку). От меньшего к большемую.
+    // здесь происходит сортировка классов операций по рангу (или ранку). От меньшего к большему.
     // std::vector<F_classes> vec_sorted_unique_classes{};
     // for(int rank = ::MIN_RANK ; rank <= ::MAX_RANK ; rank++)
     // {
@@ -410,8 +483,6 @@ int main()
 
     return 0;
 }
-
-// ПРОБЛЕМА: положение единиц в I и II иногда совпадает со всеми операциями в классе (т.е. F = Fc = Fd = Ff)
 
 // TODO: Добавить всевозможные комбинации операций меньшего ранга для получения операции ранга N.
 // Пример: вывести все комбинации операций ранга 1 и 2, с помощью которых строится ранг 3.
