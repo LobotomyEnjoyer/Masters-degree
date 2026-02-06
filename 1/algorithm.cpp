@@ -2,6 +2,7 @@
 #include <vector>
 #include <string>
 #include <bitset>
+#include <fstream>
 
 #include "identities.h"
 #include "keli_and_ordered.h"
@@ -85,84 +86,154 @@ int main()
         "10001000"
     };
 
-    // здесь происходит проверка тождеств на заданных операциях (увы, операции надо записывать руками)
-    std::vector<std::string> vec_operations = 
+    // // здесь происходит проверка тождеств на заданных операциях (увы, операции надо записывать руками)
+    // std::vector<std::string> vec_operations = 
+    // {
+    //     // КОДЫ ИЗ ГРАНТОВ
+    //     "01000100",
+    //     "01100110",
+    //     "11001100",
+    //     "11011101",
+    //     "11111111",
+    //     "10011001",
+    //     "01100100",
+    //     "11000100",
+    //     "11010100",
+    //     "11110100",
+    //     "11110110",
+    //     "10000100",
+    //     "10010100",
+    //     "10010110",
+    //     "10011100",
+    //     "10011111",
+    //     "10011101",
+    //     "10001100",
+    //     "11011100",
+    //     "11111100",
+    //     "11111101",
+    //     "11000101",
+    //     "01101101"
+
+
+
+    //     // КОДЫ ИЗ МОЕГО ДИПЛОМА
+    //     // "01000110",
+    //     // "01100100",
+
+    //     // "01001001",
+    //     // "10010100",
+
+    //     // "01001100",
+    //     // "11000100",
+
+    //     // "01001010",
+    //     // "10100100",
+
+    //     // "00100110",
+    //     // "01100010",
+
+    //     // "00101001",
+    //     // "10010010",
+
+    //     // "00101100",
+    //     // "11000010",
+
+    //     // "00101010",
+    //     // "10100010",
+
+    //     // "10000110",
+    //     // "01101000",
+
+    //     // "10001001",
+    //     // "10011000",
+
+    //     // "10001100",
+    //     // "11001000",
+
+    //     // "10000101",
+    //     // "01011000",
+
+    //     // "10001010",
+    //     // "10101000",
+
+    //     // "10000011",
+    //     // "00111000",
+        
+        
+
+    // };
+
+    // for(std::string O : vec_operations)
+    // {
+    //     F_classes cls;
+    //     cls._fill(O);
+
+    //     std::vector<int> I = cls._get_I(), II = cls._get_II();
+
+    //     auto Keli = construct_keli(I, II);
+    //     auto Ordered = construct_ordered();
+
+    //     // display_array(Keli);
+        
+    //     std::cout << "\nПроверка тождеств для:\t" << cls._get_F() << " типа " << cls._get_type() << " и ранга " << cls._get_rank() <<'\n';
+
+    //     // КОД ДЛЯ ПРОВЕРКИ ТОЖДЕСТВ ПО ГРАНТАМ
+    //     if(is_associative(cls)){std::cout << "0 ";}
+    //     if(iden1(Keli)){std::cout << "1 ";}
+    //     if(iden2(Keli)){std::cout << "2 ";}
+    //     if(iden3(Keli)){std::cout << "3 ";}
+    //     if(iden4(Keli)){std::cout << "4 ";}
+    //     if(iden4_star(Keli)){std::cout << "4* ";}
+    //     if(iden5(Keli)){std::cout << "5 ";}
+    //     if(iden6(Keli, Ordered)){std::cout << "6 ";}
+    //     if(iden6_star(Keli, Ordered)){std::cout << "6* ";}
+    //     if(iden7(Keli, Ordered)){std::cout << "7 ";}
+    //     if(quasi_iden8(Keli, Ordered)){std::cout << "8 ";}
+    //     if(quasi_iden9(Keli, Ordered)){std::cout << "9 ";}
+    //     if(quasi_iden10(Keli, Ordered)){std::cout << "10 ";}
+    //     if(quasi_iden11(Keli, Ordered)){std:: cout << "11 ";}
+
+    //     // КОД ДЛЯ ПРОВЕРКИ ТОЖДЕСТВ ИЗ МОЕГО ДИПЛОМА
+    //     // if(i1(Keli)){std::cout << "1 ";}
+    //     // if(i2(Keli)){std::cout << "2 ";}
+    //     // if(i3(Keli)){std::cout << "3 ";}
+    //     // if(i4(Keli)){std::cout << "4 ";}
+    //     // if(i5(Keli)){std::cout << "5 ";}
+    //     // if(i6(Keli)){std::cout << "6 ";}
+    //     // if(i7(Keli)){std::cout << "7 ";}
+    //     // if(i8(Keli)){std::cout << "8 ";}
+    //     // if(i9(Keli)){std::cout << "9 ";}
+    //     // if(i10(Keli, Ordered)){std::cout << "10 ";}
+    //     // if(i11(Keli, Ordered)){std::cout << "11 ";}
+    //     // if(qi12(Keli, Ordered)){std::cout << "12 ";}
+    //     // if(qi13(Keli, Ordered)){std::cout << "13 ";}
+    //     // if(qi14(Keli, Ordered)){std::cout << "14 ";}
+
+    //     std::cout << "\n\n";
+    // }
+
+    // здесь просто генерируются всевозможные классы операций
+    // а так же устранение классов операций вида 0000'xxxx или xxxx'0000, а так же из черного списка
+    std::vector<std::string> vec_all_operations{};
+    fill(vec_all_operations);
+
+    for(std::vector<std::string>::iterator it = vec_all_operations.begin(); it != vec_all_operations.end(); it++)
     {
-        // КОДЫ ИЗ ГРАНТОВ
-        "01000100",
-        "01100110",
-        "11001100",
-        "11011101",
-        "11111111",
-        "10011001",
-        "01100100",
-        "11000100",
-        "11010100",
-        "11110100",
-        "11110110",
-        "10000100",
-        "10010100",
-        "10010110",
-        "10011100",
-        "10011111",
-        "10011101",
-        "10001100",
-        "11011100",
-        "11111100",
-        "11111101",
-        "11000101",
-        "01101101"
+        if(detect_4_zeroes(it) || (*it) == vec_blacklist[0] || (*it) == vec_blacklist[1])
+        {
+            vec_all_operations.erase(it);
+            --it;
+        }
+    }
 
+        int A = 0;
+        int B = 0;
+        int C = 0;
+        int D = 0;
+        int E = 0;
+        std::ofstream my_file("output.txt");
 
-
-        // КОДЫ ИЗ МОЕГО ДИПЛОМА
-        // "01000110",
-        // "01100100",
-
-        // "01001001",
-        // "10010100",
-
-        // "01001100",
-        // "11000100",
-
-        // "01001010",
-        // "10100100",
-
-        // "00100110",
-        // "01100010",
-
-        // "00101001",
-        // "10010010",
-
-        // "00101100",
-        // "11000010",
-
-        // "00101010",
-        // "10100010",
-
-        // "10000110",
-        // "01101000",
-
-        // "10001001",
-        // "10011000",
-
-        // "10001100",
-        // "11001000",
-
-        // "10000101",
-        // "01011000",
-
-        // "10001010",
-        // "10101000",
-
-        // "10000011",
-        // "00111000",
-        
-        
-
-    };
-
-    for(std::string O : vec_operations)
+    for(std::string O : vec_all_operations)
     {
         F_classes cls;
         cls._fill(O);
@@ -172,58 +243,50 @@ int main()
         auto Keli = construct_keli(I, II);
         auto Ordered = construct_ordered();
 
-        // display_array(Keli);
+        switch (cls._get_type())
+        {
+
+        case 'A':
+            A++;
+            break;
         
-        std::cout << "\nПроверка тождеств для:\t" << cls._get_F() << " типа " << cls._get_type() << " и ранга " << cls._get_rank() <<'\n';
+        case 'B':
+            B++;
+            break;
 
-        // КОД ДЛЯ ПРОВЕРКИ ТОЖДЕСТВ ПО ГРАНТАМ
-        if(is_associative(cls)){std::cout << "0 ";}
-        if(iden1(Keli)){std::cout << "1 ";}
-        if(iden2(Keli)){std::cout << "2 ";}
-        if(iden3(Keli)){std::cout << "3 ";}
-        if(iden4(Keli)){std::cout << "4 ";}
-        if(iden4_star(Keli)){std::cout << "4* ";}
-        if(iden5(Keli)){std::cout << "5 ";}
-        if(iden6(Keli, Ordered)){std::cout << "6 ";}
-        if(iden6_star(Keli, Ordered)){std::cout << "6* ";}
-        if(iden7(Keli, Ordered)){std::cout << "7 ";}
-        if(quasi_iden8(Keli, Ordered)){std::cout << "8 ";}
-        if(quasi_iden9(Keli, Ordered)){std::cout << "9 ";}
-        if(quasi_iden10(Keli, Ordered)){std::cout << "10 ";}
-        if(quasi_iden11(Keli, Ordered)){std:: cout << "11 ";}
+        case 'C':
+            C++;
+            break;
 
-        // КОД ДЛЯ ПРОВЕРКИ ТОЖДЕСТВ ИЗ МОЕГО ДИПЛОМА
-        // if(i1(Keli)){std::cout << "1 ";}
-        // if(i2(Keli)){std::cout << "2 ";}
-        // if(i3(Keli)){std::cout << "3 ";}
-        // if(i4(Keli)){std::cout << "4 ";}
-        // if(i5(Keli)){std::cout << "5 ";}
-        // if(i6(Keli)){std::cout << "6 ";}
-        // if(i7(Keli)){std::cout << "7 ";}
-        // if(i8(Keli)){std::cout << "8 ";}
-        // if(i9(Keli)){std::cout << "9 ";}
-        // if(i10(Keli, Ordered)){std::cout << "10 ";}
-        // if(i11(Keli, Ordered)){std::cout << "11 ";}
-        // if(qi12(Keli, Ordered)){std::cout << "12 ";}
-        // if(qi13(Keli, Ordered)){std::cout << "13 ";}
-        // if(qi14(Keli, Ordered)){std::cout << "14 ";}
+        case 'D':
+            D++;
+            break;
 
-        std::cout << "\n\n";
+        case 'E':
+            E++;
+            break;
+
+        default:
+            break;
+        }
+        
+        my_file << "\nПроверка тождеств для:\t" << cls._get_F() << " типа " << cls._get_type() << " и ранга " << cls._get_rank() <<'\n';
+
+        // КОД ДЛЯ ПРОВЕРКИ ИДЕМПОТЕНТНЫХ ТОЖДЕСТВ ИЗ МОЕГО ДИПЛОМА
+        if(i3(Keli)){my_file << "3 ";}
+        if(i4(Keli)){my_file << "4 ";}
+        if(i5(Keli)){my_file << "5 ";}
+        if(i6(Keli)){my_file << "6 ";}
+        if(i7(Keli)){my_file << "7 ";}
+        if(i8(Keli)){my_file << "8 ";}
+
+
+        my_file << "\n\n";
     }
 
-    // здесь просто генерируются всевозможные классы операций
-    // а так же устранение классов операций вида 0000'xxxx или xxxx'0000, а так же из черного списка
-    // std::vector<std::string> vec_all_operations{};
-    // fill(vec_all_operations);
+    my_file << "A: " << A << "\nB: " << B << "\nC: " << C << "\nD: " << D << "\nE: " << E << "\nВсего: " << A+B+C+D+E;
 
-    // for(std::vector<std::string>::iterator it = vec_all_operations.begin(); it != vec_all_operations.end(); it++)
-    // {
-    //     if(detect_4_zeroes(it) || (*it) == vec_blacklist[0] || (*it) == vec_blacklist[1])
-    //     {
-    //         vec_all_operations.erase(it);
-    //         --it;
-    //     }
-    // }
+    my_file.close();
 
 
     // здесь происходит отбор уникальных классов
@@ -258,7 +321,7 @@ int main()
     // {
     //     for(F_classes F : vec_unique_classes)
     //     {
-    //         if(F._rank() == rank)
+    //         if(F._get_rank() == rank)
     //         {
     //             vec_sorted_unique_classes.push_back(F);
     //         }
